@@ -1,4 +1,4 @@
-Package: safir
+Package: safir3
 Title: Individual-Based Model of COVID Transmission
 Version: 0.6.0
 Authors@R: c(
@@ -17,8 +17,8 @@ Description: Implements an individual-based model of COVID-19 transmission.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/mrc-ide/safir, https://mrc-ide.github.io/safir/
-BugReports: https://github.com/mrc-ide/safir/issues
+URL: https://github.com/mrc-ide/safir3, https://mrc-ide.github.io/safir3/
+BugReports: https://github.com/mrc-ide/safir3/issues
 Remotes: 
     mrc-ide/individual,
     mrc-ide/squire,

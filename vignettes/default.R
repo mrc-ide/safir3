@@ -1,10 +1,9 @@
 
 library(devtools)
-devtools::load_all("C:/Users/xxxxx/safir3")
+devtools::load_all("C:/Users/jt511/Documents/Github/safir3")
 
-# library(safir)
+# library(safir3)
 library(squire)
-library(safir)
 library(nimue)
 library(individual)
 library(data.table)
@@ -46,7 +45,7 @@ ab_parameters <- get_vaccine_ab_titre_parameters(vaccine = "Pfizer", max_dose = 
 
 # combine parameters and verify
 parameters <- make_vaccine_parameters(
-  safir_parameters = parameters,
+  safir3_parameters = parameters,
   vaccine_ab_parameters = ab_parameters,
   vaccine_set = vaccine_set,
   dose_period = dose_period,
@@ -107,7 +106,7 @@ processes <- list(
 
 setup_events(parameters = parameters,events = events,variables = variables,dt = dt)
 
-system.time(simulation_loop_safir(
+system.time(simulation_loop_safir3(
   variables = variables,
   events = events,
   processes = processes,

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------------
- *  utilities for safir (vaccine model, not nimue version)
+ *  utilities for safir3 (vaccine model, not nimue version)
  *  Sean L. Wu (slwood89@gmail.com)
  *  July 2021
  -------------------------------------------------------------------------------- */
@@ -48,7 +48,7 @@ std::vector<double> nat_efficacy_infection_cpp(
 
 //' @title Compute vaccine efficacy against severe disease from Ab titre (C++)
 //' @description This needs the efficacy against infection because efficacy against severe disease,
-//' conditional on breakthrough infection is what safir needs, which is computed as  1 - ((1 - efficacy_disease)/(1 - efficacy_infection)).
+//' conditional on breakthrough infection is what safir3 needs, which is computed as  1 - ((1 - efficacy_disease)/(1 - efficacy_infection)).
 //' @param ab_titre a vector of Ab titres
 //' @param ef_infection a vector of efficacy against infection from \code{\link{vaccine_efficacy_infection}}
 //' @param parameters model parameters

@@ -37,7 +37,7 @@ attach_tracking_listener_incidence <- function(events, renderer) {
 #'
 #' @param renderer a [individual::Render] object
 #' @param age an [individual::IntegerVariable] object
-#' @param parameters model parameters ([safir::get_parameters])
+#' @param parameters model parameters ([safir3::get_parameters])
 #' @export
 create_age_incidence_tracking_listener <- function(renderer, age, parameters) {
   stopifnot(inherits(parameters, "list"))
@@ -60,7 +60,7 @@ create_age_incidence_tracking_listener <- function(renderer, age, parameters) {
 #' @param events a list of events
 #' @param renderer a [individual::Render] object
 #' @param age an [individual::IntegerVariable] object
-#' @param parameters model parameters ([safir::get_parameters])
+#' @param parameters model parameters ([safir3::get_parameters])
 #' @examples
 #' \dontrun{
 #' incidence_renderer <- individual::Render$new(timesteps)

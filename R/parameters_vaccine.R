@@ -17,7 +17,7 @@
 #' @param ab_50_severe titre relative to convalescent required to provide 50% protection from severe disease, on linear scale
 #' @param std10 Pooled standard deviation of antibody level on log10 data
 #' @param k shape parameter of efficacy curve
-#' @param nt_transmission_factor used by [safir::vaccine_efficacy_transmission] to compute the effect of antibody titre on onward transmission
+#' @param nt_transmission_factor used by [safir3::vaccine_efficacy_transmission] to compute the effect of antibody titre on onward transmission
 #' @param nt_efficacy_transmission a logical variable, specify if antibody titre should affect onward transmission
 #' @param max_ab maximum allowable antibody titre draw (on natural log scale)
 #' @param mu_ab_list a data.frame
@@ -94,7 +94,7 @@ get_vaccine_ab_titre_parameters <- function(
 #' @title Combine and verify vaccine parameters
 #' @note If modeling a single dose, `dose_period` must be a vector of length 1 and
 #' `next_dose_priority_matrix` may be set to `NULL`.
-#' @param safir_parameters a list from \code{\link{get_parameters}}
+#' @param safir3_parameters a list from \code{\link{get_parameters}}
 #' @param vaccine_ab_parameters a list from \code{\link{get_vaccine_ab_titre_parameters}}
 #' @param vaccine_set a vector giving the number of doses available each day (not each timestep)
 #' @param dose_period a vector giving the minimum delay between doses
@@ -105,9 +105,9 @@ get_vaccine_ab_titre_parameters <- function(
 #' final allocation phase there will be no future dose to prioritize
 #' @description Combine parameters for simulation and verify for correctness.
 #' @export
-make_vaccine_parameters <- function(safir_parameters, vaccine_ab_parameters, vaccine_set, dose_period, strategy_matrix, next_dose_priority_matrix) {
+make_vaccine_parameters <- function(safir3_parameters, vaccine_ab_parameters, vaccine_set, dose_period, strategy_matrix, next_dose_priority_matrix) {
 
-  parameters <- safir_parameters
+  parameters <- safir3_parameters
 
   vaccine_doses <- length(dose_period)
   stopifnot(vaccine_doses >= 1)

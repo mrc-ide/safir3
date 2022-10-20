@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------------
- *  utilities for safir
+ *  utilities for safir3
  *  Sean L. Wu (slwood89@gmail.com)
  *  June 2021
  -------------------------------------------------------------------------------- */
@@ -146,7 +146,7 @@ std::vector<double> tab_bins(
 };
 
 //' @title Tabulate a weighted vector of observations
-//' @description Similar to [safir::tab_bins] but instead of each observation
+//' @description Similar to [safir3::tab_bins] but instead of each observation
 //' being implicitly given weight 1, it now has weight given by `wt[i]`.
 //' @param a a set of observations
 //' @param wt a set of weights

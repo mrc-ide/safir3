@@ -8,12 +8,12 @@
 #' @return a numeric vector, 0 is maximally proective, 1 is maximally unprotective
 #' @export
 nat_efficacy_infection_cpp <- function(ab_titre, parameters, day) {
-    .Call('_safir_nat_efficacy_infection_cpp', PACKAGE = 'safir', ab_titre, parameters, day)
+    .Call('_safir3_nat_efficacy_infection_cpp', PACKAGE = 'safir3', ab_titre, parameters, day)
 }
 
 #' @title Compute vaccine efficacy against severe disease from Ab titre (C++)
 #' @description This needs the efficacy against infection because efficacy against severe disease,
-#' conditional on breakthrough infection is what safir needs, which is computed as  1 - ((1 - efficacy_disease)/(1 - efficacy_infection)).
+#' conditional on breakthrough infection is what safir3 needs, which is computed as  1 - ((1 - efficacy_disease)/(1 - efficacy_infection)).
 #' @param ab_titre a vector of Ab titres
 #' @param ef_infection a vector of efficacy against infection from \code{\link{vaccine_efficacy_infection}}
 #' @param parameters model parameters
@@ -21,7 +21,7 @@ nat_efficacy_infection_cpp <- function(ab_titre, parameters, day) {
 #' @return a numeric vector, 0 is maximally proective, 1 is maximally unprotective
 #' @export
 nat_efficacy_severe_cpp <- function(ab_titre, ef_infection, parameters, day) {
-    .Call('_safir_nat_efficacy_severe_cpp', PACKAGE = 'safir', ab_titre, ef_infection, parameters, day)
+    .Call('_safir3_nat_efficacy_severe_cpp', PACKAGE = 'safir3', ab_titre, ef_infection, parameters, day)
 }
 
 #' @title Compute vaccine efficacy against onward transmission from Ab titre (C++)
@@ -31,7 +31,7 @@ nat_efficacy_severe_cpp <- function(ab_titre, ef_infection, parameters, day) {
 #' @return a numeric vector, 0 is maximally protective, 1 is maximally unprotective
 #' @export
 nat_efficacy_transmission_cpp <- function(ab_titre, parameters, day) {
-    .Call('_safir_nat_efficacy_transmission_cpp', PACKAGE = 'safir', ab_titre, parameters, day)
+    .Call('_safir3_nat_efficacy_transmission_cpp', PACKAGE = 'safir3', ab_titre, parameters, day)
 }
 
 #' @title C++ infection process (modified squire transmission model)
@@ -45,7 +45,7 @@ nat_efficacy_transmission_cpp <- function(ab_titre, parameters, day) {
 #' @param infection a \code{\link[individual]{TargetedEvent}}
 #' @param dt size of time step
 infection_process_cpp_internal <- function(parameters, states, discrete_age, infectiousness_start_time, wearing_ppe, infection, dt) {
-    .Call('_safir_infection_process_cpp_internal', PACKAGE = 'safir', parameters, states, discrete_age, infectiousness_start_time, wearing_ppe, infection, dt)
+    .Call('_safir3_infection_process_cpp_internal', PACKAGE = 'safir3', parameters, states, discrete_age, infectiousness_start_time, wearing_ppe, infection, dt)
 }
 
 #' @title C++ infection process (modified squire transmission model)
@@ -59,11 +59,11 @@ infection_process_cpp_internal <- function(parameters, states, discrete_age, inf
 #' @param infection a \code{\link[individual]{TargetedEvent}}
 #' @param dt size of time step
 infection_process_vaccine_cpp_internal <- function(parameters, variables, states, discrete_age, infectiousness_start_time, wearing_ppe, infection, dt) {
-    .Call('_safir_infection_process_vaccine_cpp_internal', PACKAGE = 'safir', parameters, variables, states, discrete_age, infectiousness_start_time, wearing_ppe, infection, dt)
+    .Call('_safir3_infection_process_vaccine_cpp_internal', PACKAGE = 'safir3', parameters, variables, states, discrete_age, infectiousness_start_time, wearing_ppe, infection, dt)
 }
 
 compare_floats <- function(a, b) {
-    .Call('_safir_compare_floats', PACKAGE = 'safir', a, b)
+    .Call('_safir3_compare_floats', PACKAGE = 'safir3', a, b)
 }
 
 #' @title Cross tabulate two vectors with given margins
@@ -81,7 +81,7 @@ compare_floats <- function(a, b) {
 #' table(a,b)
 #' @export
 cross_tab_margins <- function(a, b, a_margin, b_margin) {
-    .Call('_safir_cross_tab_margins', PACKAGE = 'safir', a, b, a_margin, b_margin)
+    .Call('_safir3_cross_tab_margins', PACKAGE = 'safir3', a, b, a_margin, b_margin)
 }
 
 #' @title Cross tabulate doses and age
@@ -100,7 +100,7 @@ cross_tab_margins <- function(a, b, a_margin, b_margin) {
 #' }
 #' @export
 cross_tab_doses_age <- function(doses, age, num_doses, num_ages) {
-    .Call('_safir_cross_tab_doses_age', PACKAGE = 'safir', doses, age, num_doses, num_ages)
+    .Call('_safir3_cross_tab_doses_age', PACKAGE = 'safir3', doses, age, num_doses, num_ages)
 }
 
 #' @title Cross tabulate compartments and age
@@ -109,11 +109,11 @@ cross_tab_doses_age <- function(doses, age, num_doses, num_ages) {
 #' @param num_ages number of age groups
 #' @param compartment_names a vector giving category names of the [individual::CategoricalVariable]
 cross_tab_compartments_age <- function(compartments, age, num_ages, compartment_names) {
-    .Call('_safir_cross_tab_compartments_age', PACKAGE = 'safir', compartments, age, num_ages, compartment_names)
+    .Call('_safir3_cross_tab_compartments_age', PACKAGE = 'safir3', compartments, age, num_ages, compartment_names)
 }
 
 cross_tab_margins_internal <- function(a, b, a_margin, b_margin) {
-    .Call('_safir_cross_tab_margins_internal', PACKAGE = 'safir', a, b, a_margin, b_margin)
+    .Call('_safir3_cross_tab_margins_internal', PACKAGE = 'safir3', a, b, a_margin, b_margin)
 }
 
 #' @title Tabulate a vector of observations
@@ -129,18 +129,18 @@ cross_tab_margins_internal <- function(a, b, a_margin, b_margin) {
 #' tab_bins(a = a,nbins = nbin)
 #' @export
 tab_bins <- function(a, nbins) {
-    .Call('_safir_tab_bins', PACKAGE = 'safir', a, nbins)
+    .Call('_safir3_tab_bins', PACKAGE = 'safir3', a, nbins)
 }
 
 #' @title Tabulate a weighted vector of observations
-#' @description Similar to [safir::tab_bins] but instead of each observation
+#' @description Similar to [safir3::tab_bins] but instead of each observation
 #' being implicitly given weight 1, it now has weight given by `wt[i]`.
 #' @param a a set of observations
 #' @param wt a set of weights
 #' @param nbins number of bins
 #' @export
 tab_bins_weighted <- function(a, wt, nbins) {
-    .Call('_safir_tab_bins_weighted', PACKAGE = 'safir', a, wt, nbins)
+    .Call('_safir3_tab_bins_weighted', PACKAGE = 'safir3', a, wt, nbins)
 }
 
 #' @title Get contact matrix
@@ -149,7 +149,7 @@ tab_bins_weighted <- function(a, wt, nbins) {
 #' @param i the day (indexes the first dimension, assumes zero indexing)
 #' @export
 get_contact_matrix_cpp <- function(array) {
-    .Call('_safir_get_contact_matrix_cpp', PACKAGE = 'safir', array)
+    .Call('_safir3_get_contact_matrix_cpp', PACKAGE = 'safir3', array)
 }
 
 #' @title Get a value from a vector
@@ -158,7 +158,7 @@ get_contact_matrix_cpp <- function(array) {
 #' @param i the day (assumes zero indexing)
 #' @export
 get_vector_cpp <- function(vector_set, i) {
-    .Call('_safir_get_vector_cpp', PACKAGE = 'safir', vector_set, i)
+    .Call('_safir3_get_vector_cpp', PACKAGE = 'safir3', vector_set, i)
 }
 
 #' @title Multiply a matrix by a integer vector
@@ -166,7 +166,7 @@ get_vector_cpp <- function(vector_set, i) {
 #' @param a a vector (must have length equal to number of columns of \code{m})
 #' @export
 matrix_vec_mult_cpp <- function(m, a) {
-    .Call('_safir_matrix_vec_mult_cpp', PACKAGE = 'safir', m, a)
+    .Call('_safir3_matrix_vec_mult_cpp', PACKAGE = 'safir3', m, a)
 }
 
 #' @title Multiply a matrix by a integer vector and a double vector
@@ -175,7 +175,7 @@ matrix_vec_mult_cpp <- function(m, a) {
 #' @param b a vector of double (must have length equal to number of columns of \code{m})
 #' @export
 matrix_2vec_mult_cpp <- function(m, a, b) {
-    .Call('_safir_matrix_2vec_mult_cpp', PACKAGE = 'safir', m, a, b)
+    .Call('_safir3_matrix_2vec_mult_cpp', PACKAGE = 'safir3', m, a, b)
 }
 
 #' @title Element-wise multiply two matrices and take row sums
@@ -185,10 +185,10 @@ matrix_2vec_mult_cpp <- function(m, a, b) {
 #' @param b a matrix
 #' @export
 mult_2matrix_rowsum <- function(a, b) {
-    .Call('_safir_mult_2matrix_rowsum', PACKAGE = 'safir', a, b)
+    .Call('_safir3_mult_2matrix_rowsum', PACKAGE = 'safir3', a, b)
 }
 
 get_proportion_vaccinated_nimue_internal <- function(discrete_age, vaccinated, age) {
-    .Call('_safir_get_proportion_vaccinated_nimue_internal', PACKAGE = 'safir', discrete_age, vaccinated, age)
+    .Call('_safir3_get_proportion_vaccinated_nimue_internal', PACKAGE = 'safir3', discrete_age, vaccinated, age)
 }
 

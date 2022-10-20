@@ -1,1 +1,1 @@
-testthat::test_check("safir")
+testthat::test_check("safir3")

@@ -29,9 +29,9 @@ variant_fold_reduction_vector <- function(parameters, dt, vfr, vfr_time_1, vfr_t
 
 #' @title Attach parameters dealing with immune (NAT) dynamics to parameter list
 #' @param parameters a list of model parameters
-#' @param vfr a vector from [safir::variant_fold_reduction_vector]
+#' @param vfr a vector from [safir3::variant_fold_reduction_vector]
 #' @param mu_ab_infection a vector of values associated with NAT for each infection bout;
-#' please read [safir::attach_event_listeners_natural_immunity] carefully depending on
+#' please read [safir3::attach_event_listeners_natural_immunity] carefully depending on
 #' if you are using the additive or overwriting NAT model, because this parameter's
 #' interpretation will change. It may also be given as a vector, with each column
 #' indexing a day in the simulation (so it is equal to `time_period`).

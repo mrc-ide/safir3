@@ -1,10 +1,10 @@
-#' safir: squire and friends individual rewrite
+#' safir3: squire and friends individual rewrite
 #'
 #' @description
-#' safir is an individual-based simulation model of COVD-19 based on squire.
+#' safir3 is an individual-based simulation model of COVD-19 based on squire.
 #'
 #' @docType package
-#' @name safir
+#' @name safir3
 #'
 #' @importFrom stats setNames
 #' @importFrom utils getFromNamespace
@@ -13,7 +13,7 @@
 
 ## usethis namespace: start
 #' @importFrom Rcpp sourceCpp
-#' @useDynLib safir
+#' @useDynLib safir3
 ## usethis namespace: end
 NULL
 

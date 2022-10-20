@@ -46,7 +46,7 @@ get_contact_matrix <- function(parameters) {
 #' @param rt a vector of reproductive values at those dates
 #' @param max_date the maximum date of simulation (optional)
 #' @return a [list] with named elements `Rt` and `Rt_tt`, which can be provided
-#' to the [safir::get_parameters] function's arguments `R0` and `tt_R0`.
+#' to the [safir3::get_parameters] function's arguments `R0` and `tt_R0`.
 #' @importFrom stats approx
 #' @export
 interpolate_rt <- function(dates, rt, max_date = NULL) {

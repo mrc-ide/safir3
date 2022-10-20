@@ -4,7 +4,7 @@
 #   May 2021
 # --------------------------------------------------
 
-#' @title Simulation loop for safir models
+#' @title Simulation loop for safir3 models
 #' @description This is a replacement for [individual::simulation_loop]
 #' for models where not all values in `variables` need to be updated, and
 #' also adds an optional progress bar
@@ -16,7 +16,7 @@
 #' @param progress dispaly a progress bar?
 #' @importFrom utils setTxtProgressBar txtProgressBar
 #' @export
-simulation_loop_safir <- function(
+simulation_loop_safir3 <- function(
   variables = list(),
   events = list(),
   processes = list(),

@@ -31,7 +31,7 @@ vaccine_efficacy_infection <- function(ab_titre, parameters, day) {
 
 #' @title Compute vaccine efficacy against severe disease from Ab titre
 #' @description This needs the efficacy against infection because efficacy against severe disease,
-#' conditional on breakthrough infection is what safir needs, which is computed as  1 - ((1 - efficacy_disease)/(1 - efficacy_infection)).
+#' conditional on breakthrough infection is what safir3 needs, which is computed as  1 - ((1 - efficacy_disease)/(1 - efficacy_infection)).
 #' @param ab_titre a vector of Ab titres
 #' @param ef_infection a vector of efficacy against infection from \code{\link{vaccine_efficacy_infection}}
 #' @param parameters model parameters
