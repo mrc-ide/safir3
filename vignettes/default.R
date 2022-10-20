@@ -1,6 +1,6 @@
 
 library(devtools)
-devtools::load_all("C:/Users/jt511/Documents/Github/safir3")
+devtools::load_all("C:/xxxx/safir3")
 
 # library(safir3)
 library(squire)
