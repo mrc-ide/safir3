@@ -1,13 +1,10 @@
 # **safir3**
 
-**safir**: **s**quire **a**nd **f**riends **i**ndividual **r**ewrite
-
-It uses the [`{individual}`](https://github.com/mrc-ide/individual)
-package to specify and run the simulation.
-
-**safir** can run individual based stochastic models of vaccination,
-with an arbitrary number of doses and antibody titre dynamics which affect
-protective efficacy as well as efficacy against severe disease outcomes.
+**safir** runs individual based stochastic models. It is based on the
+[`{individual}`](https://github.com/mrc-ide/individual) package. It can be
+used to model vaccination, with an arbitrary number of doses and antibody
+titre dynamics which affect protective efficacy as well as efficacy
+against severe disease outcomes.
 
 **safir3** adds individual infectiousness, for modelling the impact of
 antiviral treatments, a simplified compartmental system, and a few other features.
