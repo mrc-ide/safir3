@@ -1,39 +1,20 @@
-# **safir**
-
-<!-- badges: start -->
-[![R build
-status](https://github.com/mrc-ide/safir/workflows/R-CMD-check/badge.svg)](https://github.com/mrc-ide/safir/actions)
-[![CodeFactor](https://www.codefactor.io/repository/github/mrc-ide/safir/badge)](https://www.codefactor.io/repository/github/mrc-ide/safir)
-[![codecov.io](https://codecov.io/github/mrc-ide/safir/coverage.svg?branch=main)](https://codecov.io/github/mrc-ide/safir?branch=main)
-<!-- badges: end -->
+# **safir3**
 
 **safir**: **s**quire **a**nd **f**riends **i**ndividual **r**ewrite
-(and maintains the squire naming
-[theme](https://en.wikipedia.org/wiki/Knights_of_the_Round_Table#Safir)).
+
 It uses the [`{individual}`](https://github.com/mrc-ide/individual)
 package to specify and run the simulation.
 
-**safir** can run individual based stochastic versions of the **squire** and
-**nimue** models, which recover trajectories from those aggregated population
-models (see package vignettes). It also implements a model for vaccination
+**safir** can run individual based stochastic models of vaccination,
 with an arbitrary number of doses and antibody titre dynamics which affect
 protective efficacy as well as efficacy against severe disease outcomes.
 
-Because **safir** implements multiple models as individual based simulations,
-there is a large amount of code, but the central disease progression is shared
-across the models within **safir**. Each vignette describes how the simulation
-functions and where the relevant code can be found.
-
-## Installation
-
-``` r
-install_github('mrc-ide/safir')
-library(safir)
-```
+**safir3** adds individual infectiousness, for modelling the impact of
+antiviral treatments, a simplified compartmental system, and a few other features.
 
 ## Documentation
 
-[`{safir}`](https://github.com/mrc-ide/safir) is documented on a
+The original [`{safir}`](https://github.com/mrc-ide/safir) is documented on a
 [dedicated website](https://mrc-ide.github.io/safir).
 
 This includes the following vignettes:
