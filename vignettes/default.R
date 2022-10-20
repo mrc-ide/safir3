@@ -72,6 +72,7 @@ attach_event_listeners_natural_immunity(variables = variables, events = events, 
 
 # make renderers
 renderer <- Render$new(parameters$time_period)
+hosp_renderer <- Render$new(parameters$time_period)
 nat_renderer <- Render$new(parameters$time_period)
 dose_renderer <- Render$new(parameters$time_period)
 incidence_renderer <- Render$new(timesteps)
@@ -100,6 +101,7 @@ processes <- list(
   vaccination_process(parameters = parameters,variables = variables,events = events,dt = dt),
   infection_process_vaccine_cpp(parameters = parameters,variables = variables,events = events,dt = dt),
   categorical_count_renderer_process_daily(renderer = renderer,variable = variables$states,categories = variables$states$get_categories(),dt = dt),
+  categorical_count_renderer_process_daily(renderer = hosp_renderer,variable = variables$hospitalization_states,categories = variables$hospitalization_states$get_categories(),dt = dt),
   double_count_render_process_daily(renderer = nat_renderer, variable = variables$ab_titre, dt = dt),
   integer_count_render_process_daily(renderer = dose_renderer,variable = variables$dose_num,margin = 0:vaccine_doses,dt = dt)
 )
@@ -138,7 +140,7 @@ ggplot(data = dose_out) +
   geom_line(aes(x=timestep,y=value,color=dose)) +
   theme_bw()
 
-### Infection states
+### Health states
 
 saf_dt <- as.data.table(renderer$to_dataframe())
 saf_dt[, I_count := I_count]
@@ -148,6 +150,21 @@ setnames(x = saf_dt,old = c("timestep","name","value"),new = c("t","compartment"
 saf_dt[["y"]] <- as.integer(saf_dt[["y"]] / scale)
 
 ggplot(data = saf_dt, aes(t,y,color = compartment)) +
+  geom_line() +
+  geom_line() +
+  facet_wrap(~compartment, scales = "free")
+
+### Hospital states
+
+hosp_saf_dt <- as.data.table(hosp_renderer$to_dataframe())
+hosp_saf_dt[, Not_In_Hospital_count := NULL]
+hosp_saf_dt[, Pre_Hospital_count := NULL]
+hosp_saf_dt <- melt(hosp_saf_dt,id.vars = c("timestep"),variable.name = "name")
+hosp_saf_dt[, name := gsub("(^)(\\w*)(_count)", "\\2", name)]
+setnames(x = hosp_saf_dt,old = c("timestep","name","value"),new = c("t","compartment","y"))
+hosp_saf_dt[["y"]] <- as.integer(hosp_saf_dt[["y"]] / scale)
+
+ggplot(data = hosp_saf_dt, aes(t,y,color = compartment)) +
   geom_line() +
   geom_line() +
   facet_wrap(~compartment, scales = "free")
