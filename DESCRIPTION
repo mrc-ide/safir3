@@ -1,0 +1,49 @@
+Package: safir
+Title: Individual-Based Model of COVID Transmission
+Version: 0.6.0
+Authors@R: c(
+            person(
+                given = "Sean L.",
+                family = "Wu",
+                role = c('aut', 'cre'),
+                comment = c(ORCID = "0000-0002-5781-9493"),
+                email = 'slwood89@gmail.com'
+            ),
+            person("OJ", "Watson", email = "o.watson15@imperial.ac.uk", role = c("aut")),
+            person("Peter", "Winskill", email = "p.winskill@imperial.ac.uk", role = c("aut")),
+            person("Imperial College of Science, Technology and Medicine",role = "cph"))
+Description: Implements an individual-based model of COVID-19 transmission.
+    Derives from previous work in 'squire'.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+URL: https://github.com/mrc-ide/safir, https://mrc-ide.github.io/safir/
+BugReports: https://github.com/mrc-ide/safir/issues
+Remotes: 
+    mrc-ide/individual,
+    mrc-ide/squire,
+    mrc-ide/nimue
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0
+Suggests:
+    testthat,
+    mockery,
+    ggplot2,
+    knitr,
+    rmarkdown
+Imports:
+    individual,
+    Rcpp,
+    squire,
+    nimue,
+    utils,
+    data.table
+VignetteBuilder: knitr
+NeedsCompilation: yes
+SystemRequirements: C++14
+ByteCompile: true
+Depends: 
+    R (>= 2.10)
+LinkingTo: 
+    Rcpp,
+    individual
