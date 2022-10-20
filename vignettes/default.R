@@ -1,7 +1,6 @@
 
 library(devtools)
-
-devtools::load_all("C:/Users/jthompson/Documents/GitHub/safir_globalfund")
+devtools::load_all("C:/Users/xxxxx/safir3")
 
 # library(safir)
 library(squire)
@@ -12,10 +11,14 @@ library(data.table)
 library(ggplot2)
 library(dplyr)
 
-iso3c <- "GBR"
-scale <- 1 / 1e3
+start_date <- "2022-11-01"
+start_date <- as.Date(start_date)
+
+iso3c <- "SGP"
 time_period <- 365
 dt <- 0.5
+initial_infections <- 1000
+scale <- 1 / 1e2
 
 # vaccine dosing
 vaccine_doses <- 2
@@ -33,7 +36,8 @@ parameters <- get_parameters(
   iso3c = iso3c,
   scale = scale,
   time_period = time_period,
-  dt = dt
+  dt = dt,
+  initial_infections = initial_infections
 )
 timesteps <- parameters$time_period/dt
 
@@ -71,6 +75,7 @@ attach_event_listeners_natural_immunity(variables = variables, events = events, 
 renderer <- Render$new(parameters$time_period)
 nat_renderer <- Render$new(parameters$time_period)
 dose_renderer <- Render$new(parameters$time_period)
+incidence_renderer <- Render$new(timesteps)
 
 double_count_render_process_daily <- function(renderer, variable, dt) {
   stopifnot(inherits(variable, "DoubleVariable"))
@@ -87,6 +92,8 @@ double_count_render_process_daily <- function(renderer, variable, dt) {
     }
   }
 }
+
+attach_tracking_listener_incidence(events = events, renderer = incidence_renderer)
 
 # processes
 processes <- list(
@@ -145,3 +152,31 @@ ggplot(data = saf_dt, aes(t,y,color = compartment)) +
   geom_line() +
   geom_line() +
   facet_wrap(~compartment, scales = "free")
+
+### Incidence
+
+df <- incidence_renderer$to_dataframe()
+time_steps_per_day = 1 / dt
+daily <- data.frame(timestep = rep(0, parameters$time_period), incidence = rep(0, parameters$time_period))
+for (t in seq_len(time_steps_per_day)) {
+  daily <- daily + df[seq(t, nrow(df), time_steps_per_day), ]
+}
+daily_incidence <- data.frame(dates = seq.Date(from=start_date, by=1, length.out = parameters$time_period))
+daily_incidence$I <- daily$incidence / parameters$scale
+daily_incidence[is.na(daily_incidence)] <- 0
+
+library(incidence)
+plot(as.incidence(daily_incidence$I, dates = daily_incidence$dates))
+
+### R estimate
+
+library(EpiEstim)
+
+inf_dist <- parameters$infectiousness_profile
+inf_dist[1] <- 0 # EpiEstim requires that si is positive, with value 0 assigned to 1...
+si_distr <- inf_dist / sum(inf_dist)
+res_non_parametric_si <- estimate_R(daily_incidence, 
+                                    method="non_parametric_si",
+                                    config = make_config(list(si_distr = si_distr))
+)
+plot(res_non_parametric_si, "R")
