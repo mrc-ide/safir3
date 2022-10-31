@@ -9,11 +9,10 @@ Authors@R: c(
                 comment = c(ORCID = "0000-0002-5781-9493"),
                 email = 'slwood89@gmail.com'
             ),
-            person("OJ", "Watson", email = "o.watson15@imperial.ac.uk", role = c("aut")),
-            person("Peter", "Winskill", email = "p.winskill@imperial.ac.uk", role = c("aut")),
+            person("James", "Thompson", email = "j.thompson22@imperial.ac.uk", role = c("aut")),
             person("Imperial College of Science, Technology and Medicine",role = "cph"))
 Description: Implements an individual-based model of COVID-19 transmission.
-    Derives from previous work in 'squire'.
+    Derives from previous work in 'safir'.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
