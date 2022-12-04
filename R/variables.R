@@ -29,7 +29,7 @@ create_variables <- function(parameters) {
 #' @param continuous return both age by year and bin?
 #' @importFrom individual IntegerVariable
 #' @return named list of variable objects
-create_age_variables <- function(pop, parameters, continuous = FALSE) {
+create_age_variables <- function(pop, parameters, continuous = TRUE) {
 
   cont_age <- create_continuous_age_variable(pop, parameters$max_age)
 

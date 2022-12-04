@@ -1,6 +1,6 @@
 
 library(devtools)
-devtools::load_all("C:/xxxx/safir3")
+devtools::load_all("C:/xxx/safir3")
 
 # library(safir3)
 library(squire)
@@ -183,6 +183,17 @@ daily_incidence[is.na(daily_incidence)] <- 0
 
 library(incidence)
 plot(as.incidence(daily_incidence$I, dates = daily_incidence$dates))
+
+# write.csv(daily_incidence,"C:\\tmp\\incidence_safir.csv", row.names = FALSE)
+# 
+# final_state <- data.frame(age = variables$age$get_values())
+# final_state['ab_titre'] <- variables$ab_titre$get_values()
+# final_state['infection_number'] <- variables$inf_num$get_values()
+# final_state['dose_number'] <- variables$dose_num$get_values()
+# final_state['days_since_last_infection'] <- (parameters$time_period - (variables$inf_time$get_values() * dt))
+# final_state['days_since_last_dose'] <- (parameters$time_period - (variables$dose_time$get_values() * dt))
+# 
+# write.csv(final_state,"C:\\tmp\\final_state_safir.csv", row.names = FALSE)
 
 ### R estimate
 
