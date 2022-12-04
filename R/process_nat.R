@@ -120,8 +120,11 @@ get_time_since_last_dose_or_infection <- function(timestep, dt, vaccinated_or_in
   last_dose_tt <- dose_time$get_values(vaccinated_or_infected)
   last_inf_tt <- inf_time$get_values(vaccinated_or_infected)
 
+  times_inf <- timestep - last_inf_tt
+  times_dose <- timestep - last_dose_tt
+
   # the max of last dose and last inf time will give the time of last ab boost
-  times <- timestep - pmax(last_dose_tt, last_inf_tt)
+  times <- pmin(times_inf, times_dose)
   times <- times * dt
 
   return(times)

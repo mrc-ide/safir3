@@ -12,12 +12,23 @@
 #' @export
 create_variables <- function(parameters) {
 
-  pop <- parameters$pop
+  if(is.null(parameters$initial_state)){
+    pop <- parameters$pop
+    c(
+      create_age_variables(pop, parameters),
+      states = create_state_variables(parameters)
+    )
+  } else {
+    age <- parameters$initial_state[['age']]
+    discrete_age <- (age %/% 5) + 1
+    discrete_age[discrete_age > 17] <- 17
+    c(
+      age = IntegerVariable$new(initial_values = age),
+      discrete_age = IntegerVariable$new(initial_values = discrete_age),
+      states = create_state_variables(parameters)
+    )
+  }
 
-  c(
-    create_age_variables(pop, parameters),
-    states = create_state_variables(parameters)
-  )
 }
 
 

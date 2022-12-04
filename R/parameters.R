@@ -13,7 +13,8 @@
 #' @param ... Other parameters
 #' @return model parameters
 #' @export
-get_parameters <- function(iso3c = NULL,
+get_parameters <- function(initial_state = NULL,
+                           iso3c = NULL,
                            scale = 1.0,
                            time_period = 365,
                            dt = 0.5,
@@ -29,8 +30,54 @@ get_parameters <- function(iso3c = NULL,
     pars$iso3c <- iso3c
     pars$country <- squire::population[squire::population$iso3c == iso3c, "country"][[1]]
 
-    # Scale factor
-    pars$scale <- scale
+    if(is.null(initial_state)){
+
+      # Scale factor
+      pars$scale <- scale
+
+      # Population data (from Squire)
+      assert_string(iso3c)
+      if(!iso3c %in% unique(squire::population$iso3c)){stop("iso3c not found")}
+      pars$pop <- squire::population[squire::population$iso3c == iso3c, ] %>%
+                  dplyr::arrange(.data$age_group)
+      pars$pop$n <- as.integer(pars$pop$n * scale)
+
+      # Population size
+      pars$population_size_by_age_group <- pars$pop$n
+      pars$population_size_total <- sum(pars$pop$n)
+      pars$number_of_age_groups <- length(pars$population_size_by_age_group)
+
+      # Max age
+      pars$max_age <- 100
+
+    } else {
+
+      # Initial state
+      pars$initial_state <- initial_state
+
+      # Population size
+      age <- pars$initial_state[['age']]
+      pars$population_size_total <- length(age)
+      pars$number_of_age_groups <- 17
+      population_size_by_age_group <- rep(0, pars$number_of_age_groups)
+      for(a in age){
+        discrete_age <- min(a %/% 5, 16) + 1
+        population_size_by_age_group[discrete_age] <- population_size_by_age_group[discrete_age] + 1
+      }
+      pars$population_size_by_age_group <- population_size_by_age_group
+
+      # Max age
+      pars$max_age <- max(age)
+
+      # Population data (from Squire)
+      assert_string(iso3c)
+      if(!iso3c %in% unique(squire::population$iso3c)){stop("iso3c not found")}
+      pars$pop <- squire::population[squire::population$iso3c == iso3c, ] %>%
+                  dplyr::arrange(.data$age_group)
+
+      # Scale factor
+      pars$scale <- pars$population_size_total / sum(pars$pop$n)
+    }
 
     # Time period (in days)
     pars$time_period <- time_period
@@ -38,32 +85,18 @@ get_parameters <- function(iso3c = NULL,
     # Time step (in days)
     pars$dt <- dt
 
-    # Population data (from Squire)
-    assert_string(iso3c)
-    if(!iso3c %in% unique(squire::population$iso3c)){stop("iso3c not found")}
-    pars$pop <- squire::population[squire::population$iso3c == iso3c, ] %>%
-                dplyr::arrange(.data$age_group)
-    pars$pop$n <- as.integer(pars$pop$n * scale)
-
-    # Population size
-    pars$population_size_by_age_group <- pars$pop$n
-    pars$population_size_total <- sum(pars$pop$n)
-    pars$number_of_age_groups <- length(pars$population_size_by_age_group)
-
     # Contact matrix (from Squire)
     contact_matrix <- squire::contact_matrices[[pars$pop$matrix[1]]]
-    contact_matrix <- process_contact_matrix_scaled_age(contact_matrix, pars$pop$n)
-    contact_matrix <- div_pop(contact_matrix, pars$pop$n)
+    contact_matrix <- process_contact_matrix_scaled_age(contact_matrix,
+                                                        pars$population_size_by_age_group)
+    contact_matrix <- div_pop(contact_matrix, pars$population_size_by_age_group)
     pars$contact_matrix <- contact_matrix
-
-    # Max age
-    pars$max_age <- 100
 
     # External force of infection
     pars$lambda_external <- rep(0, time_period)
 
     # Input sequence of betas (issue: mixing matrices not consistent, so this depends on country...)
-    pars$beta_set <- rep(0.22, time_period)
+    pars$beta_set <- rep(0.5, time_period)
 
     # Transition probabilities by age group (each set should sum to 1)
     pars$prob_IAsymp         <- rep(0.4, 17)
@@ -83,7 +116,7 @@ get_parameters <- function(iso3c = NULL,
     pars$prob_ICritical_to_D <- rep(0.5, 17) # Redundant
 
     # Number of initial infections
-    pars$num_initial_infections <- max(as.integer(initial_infections * scale), 1)
+    pars$num_initial_infections <- max(as.integer(initial_infections * pars$scale), 1)
 
     # Initial number in each health state
     pars$S_0 <- pars$population_size_total - pars$num_initial_infections

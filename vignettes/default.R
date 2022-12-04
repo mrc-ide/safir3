@@ -13,11 +13,12 @@ library(dplyr)
 start_date <- "2022-11-01"
 start_date <- as.Date(start_date)
 
+initial_state <- readRDS("C:/xxx/safir3/data/synthetic_populations/SGP.Rds")
 iso3c <- "SGP"
 time_period <- 365
 dt <- 0.5
 initial_infections <- 1000
-scale <- 1 / 1e2
+# scale <- 1 / 1e2
 
 # vaccine dosing
 vaccine_doses <- 2
@@ -32,8 +33,9 @@ next_dose_priority[1, 15:17] <- 1 # prioritize 3 oldest age groups for next dose
 
 # base parameters
 parameters <- get_parameters(
+  initial_state = initial_state,
   iso3c = iso3c,
-  scale = scale,
+  scale = NULL,
   time_period = time_period,
   dt = dt,
   initial_infections = initial_infections
@@ -147,7 +149,7 @@ saf_dt[, I_count := I_count]
 saf_dt <- melt(saf_dt,id.vars = c("timestep"),variable.name = "name")
 saf_dt[, name := gsub("(^)(\\w*)(_count)", "\\2", name)]
 setnames(x = saf_dt,old = c("timestep","name","value"),new = c("t","compartment","y"))
-saf_dt[["y"]] <- as.integer(saf_dt[["y"]] / scale)
+saf_dt[["y"]] <- as.integer(saf_dt[["y"]] / parameters$scale)
 
 ggplot(data = saf_dt, aes(t,y,color = compartment)) +
   geom_line() +
@@ -162,7 +164,7 @@ hosp_saf_dt[, Pre_Hospital_count := NULL]
 hosp_saf_dt <- melt(hosp_saf_dt,id.vars = c("timestep"),variable.name = "name")
 hosp_saf_dt[, name := gsub("(^)(\\w*)(_count)", "\\2", name)]
 setnames(x = hosp_saf_dt,old = c("timestep","name","value"),new = c("t","compartment","y"))
-hosp_saf_dt[["y"]] <- as.integer(hosp_saf_dt[["y"]] / scale)
+hosp_saf_dt[["y"]] <- as.integer(hosp_saf_dt[["y"]] / parameters$scale)
 
 ggplot(data = hosp_saf_dt, aes(t,y,color = compartment)) +
   geom_line() +

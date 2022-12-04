@@ -64,16 +64,38 @@ create_vaccine_variables <- function(variables, parameters) {
   max_dose <- parameters$N_phase
   correlated <- parameters$correlated
 
-  variables$dose_num <- IntegerVariable$new(initial_values = rep(0,n))
-  variables$dose_time <- IntegerVariable$new(initial_values = rep(-1, n))
-  variables$phase <- new.env(hash = FALSE)
-  variables$phase$value <- 1L
+  if(is.null(parameters$initial_state)){
 
-  # ab dynamics
-  variables$ab_titre <- DoubleVariable$new(initial_values = rep(-Inf, n))
+    variables$dose_num <- IntegerVariable$new(initial_values = rep(0,n))
+    variables$dose_time <- IntegerVariable$new(initial_values = rep(-1, n))
+    variables$phase <- new.env(hash = FALSE)
+    variables$phase$value <- 1L
 
-  if (correlated) {
-    variables$zdose <- DoubleVariable$new(initial_values = rep(-Inf, n))
+    # ab dynamics
+    variables$ab_titre <- DoubleVariable$new(initial_values = rep(-Inf, n))
+
+    if (correlated) {
+      variables$zdose <- DoubleVariable$new(initial_values = rep(-Inf, n))
+    }
+
+  } else {
+
+    dose_number <- parameters$initial_state[['dose_number']]
+    days_since_last_dose <- parameters$initial_state[['days_since_last_dose']]
+    ab_titre <- parameters$initial_state[['ab_titre']]
+    ticks_since_last_dose <- as.integer(days_since_last_dose / parameters$dt)
+    variables$dose_num <- IntegerVariable$new(initial_values = dose_number)
+    variables$dose_time <- IntegerVariable$new(initial_values = -ticks_since_last_dose)
+    variables$phase <- new.env(hash = FALSE)
+    variables$phase$value <- 1L
+
+    # ab dynamics
+    variables$ab_titre <- DoubleVariable$new(initial_values = ab_titre)
+
+    if (correlated) {
+      variables$zdose <- DoubleVariable$new(initial_values = rep(-Inf, n))
+    }
+
   }
 
   return(variables)
